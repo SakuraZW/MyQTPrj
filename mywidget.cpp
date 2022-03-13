@@ -12,6 +12,7 @@
 #include <Windows.h>
 #include <QThread>
 #include <QWindow>
+#include <QErrorMessage>
 
 #include "g29ctrl.h"
 #include "mywidget.h"
@@ -46,8 +47,6 @@ myWidget::myWidget(QWidget *parent)
     btn_ctrl->move(90,80);
     btn_ctrl->resize(120, 40);
 
-
-
     //创建下拉选项
     cbx_ratio = new QComboBox(this);
     const QStringList my_text = {"1920*1080","1080*720","640*480"};     //设置视频拉流的分辨率
@@ -57,14 +56,15 @@ myWidget::myWidget(QWidget *parent)
     cbx_ratio->move(90,140);
 
 
-    thrd_data_send = new MyThread;    //创建一个新的线程,用来发送数据g29_error
+    thrd_data_send = new MyThread;    //创建一个新的线程,用来发送数据g29_error&QErrorMessage::show
 
-//    windo_err = new QMainWindow;
-//    windo_err->setParent(this);
+    err_msg = new QErrorMessage(this);  //新建一个报错的消息框,显示报错的类型
+//    err_msg->setFixedSize();
+
     //关联信号与槽函数
     connect(btn_ctrl, &QPushButton::clicked, this, &myWidget::ctrl_G29_slot);
 
-    connect(thrd_data_send, &MyThread::g29_init_error, this, &myWidget::create_error_info);        //当你想用QT
+    connect(thrd_data_send, SIGNAL(show_error_msg(const QString)), err_msg, SLOT(showMessage(const QString)));        //当你想用QT信号和槽函数时，要不写成这种形式，要不写成上下的形式
 
     connect(btn_video, &QPushButton::clicked, this, &myWidget::start_video_slot);
     connect(btn_ctrl, &QPushButton::clicked, this, &myWidget::ctrl_G29_slot);
@@ -100,21 +100,11 @@ void myWidget:: start_video_slot()   //定义一个在myWidget类下的函数方
 
 void myWidget::ctrl_G29_slot()
 {
-    thrd_data_send->start();
+    thrd_data_send->start();        //开启子线程中的网络通信部分
+
 //    qDebug()<<"主线程"<<QThread::currentThreadId();enum error_type err
 }
 
-void myWidget::create_error_info()
-{
-
-//    switch (err)
-//    {
-//        case g29_error:
-        qDebug()<<"hello";
-//    }
-
-
-}
 
 //我的窗口类的析构 创建出来的对象必须要释放
 myWidget::~myWidget()

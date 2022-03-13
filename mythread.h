@@ -17,11 +17,7 @@ private:
     volatile bool isStop;
 
 signals:
-    void g29_init_error();  //g29初始化错误
-    void socket_init_error();
-    void inet_error();
-
-
+    void show_error_msg(const QString);  //g29初始化错误
 };
 
 #endif // MYTHREAD_H

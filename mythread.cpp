@@ -21,7 +21,7 @@ void MyThread::run()
 {
     if (1 == WheelInit())
     {
-        emit g29_init_error();
+        emit show_error_msg("g29_error");
     }
 }
 

@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QMainWindow>
+#include <QErrorMessage>
 
 #include <mythread.h>
 
@@ -23,8 +24,8 @@ public:
     QPushButton *btn_video;
     QPushButton *btn_ctrl;
     QComboBox *cbx_ratio;
-    QMainWindow *windo_err;
-//    QThread *thrd_data_send;
+//    QMainWindow *windo_err;
+    QErrorMessage *err_msg;
 public:
     myWidget(QWidget *parent = nullptr);    //类名字相同的默认就是类的构造函数 默认参数enum error_typeenum error_type
     ~myWidget();
@@ -32,7 +33,6 @@ public:
 public slots:
     void start_video_slot();
     void ctrl_G29_slot();
-    void create_error_info();
 
 public:
     MyThread * thrd_data_send;
