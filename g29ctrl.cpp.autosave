@@ -23,8 +23,8 @@ int changeddata = 0;
 
 enum error_type WheelInit()
 {
-    enum error_type symb = none_error;
-/*
+    enum error_type symb = none_error;      
+    
     if (LogiSteeringInitialize(true))
     {
         cout << "————————————————————————————————————————" << endl;
@@ -150,15 +150,15 @@ enum error_type WheelInit()
         }
 
     }
-*/
 
-//    else
-//    {
+
+    else
+    {
             symb = g29_error;                   //此条信息用以进行g29弹窗报错
 //            qDebug()<<"init faild";         //QT中尽量使用qdebug输出调试信息。如果使用功printf和cout在多线程情况下无法输出
 
 
-//    }
+    }
     return symb;
 }
 

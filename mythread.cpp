@@ -6,6 +6,9 @@
 #include <QLabel>
 
 #include "mythread.h"
+#include "g29ctrl.h"
+
+
 ////这个文件用于定义自己的线程类的成员函数
 MyThread::MyThread()
 {
@@ -19,7 +22,7 @@ void MyThread::closeThread()
 
 void MyThread::run()
 {
-    if (1 == WheelInit())
+    if (g29_error == WheelInit())
     {
         emit show_error_msg("g29_error");
     }

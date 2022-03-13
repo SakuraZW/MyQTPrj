@@ -9,12 +9,12 @@
 
 #include <mythread.h>
 
-enum error_type{
-    g29_error,
-    socket_error,
-    inet_error,
-    unknown_error,
-};
+//enum error_type{
+//    g29_error,
+//    socket_error,
+//    inet_error,
+//    unknown_error,
+//};
 
 //定义了我的窗口类 此类继承了QWidget大类
 class myWidget : public QWidget
