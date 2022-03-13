@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     g29ctrl.cpp \
     main.cpp \
+    mythread.cpp \
     mywidget.cpp
 
 HEADERS += \
     LogitechSteeringWheelLib.h \
     g29ctrl.h \
+    mythread.h \
     mywidget.h
 
 # Default rules for deployment.

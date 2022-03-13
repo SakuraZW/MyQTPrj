@@ -10,7 +10,7 @@
 
 #define BUF_SIZE 4096
 
-int* WheelInit(HWND hwnd);
+int* WheelInit();
 uint64_t TimeMilliSecond();
 void initialization();
 void SendMessage(int x, int y, int z, int bb);

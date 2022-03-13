@@ -10,13 +10,10 @@
 #include <QMessageBox>
 #include <thread>
 #include <Windows.h>
+#include <QThread>
 
-//#include "LogitechSteeringWheelLib.h"
+#include "g29ctrl.h"
 #include "mywidget.h"
-
-//#pragma comment(lib,"Advapi32.lib")
-#pragma comment(lib, "LogitechSteeringWheelLib.lib")
-//#pragma comment( linker, "/subsystem:\"console\" /entry:\"WinMainCRTStartup\"")
 
 //replace your own path
 #define FFMPEG_PATH "D:\\MyProject\\RemoteDrive\\FFmpeg\\ffmpeg_4.4_full_build\\bin\\ffplay.exe"
@@ -49,8 +46,8 @@ myWidget::myWidget(QWidget *parent)
     btn_ctrl->resize(120, 40);
 
     //关联信号与槽
-    connect(btn_video, &QPushButton::clicked, this, &myWidget::start_video);
-    connect(btn_ctrl, &QPushButton::clicked, this, &myWidget::ctrl_G29);
+    connect(btn_video, &QPushButton::clicked, this, &myWidget::start_video_slot);
+    connect(btn_ctrl, &QPushButton::clicked, this, &myWidget::ctrl_G29_slot);
     //创建下拉选项
     cbx_ratio = new QComboBox(this);
     const QStringList my_text = {"1920*1080","1080*720","640*480"};     //设置视频拉流的分辨率
@@ -59,9 +56,12 @@ myWidget::myWidget(QWidget *parent)
     cbx_ratio->resize(120, 40);
     cbx_ratio->move(90,140);
 
+   thrd_data_send = new MyThread;    //创建一个新的线程
+   connect(btn_ctrl, &QPushButton::clicked, this, &myWidget::ctrl_G29_slot);
+
 }
 
-void myWidget:: start_video()   //定义一个在myWidget类下的函数方法
+void myWidget:: start_video_slot()   //定义一个在myWidget类下的函数方法
 {
     QString resolution_ratio = {};       //存放分辨率
     qDebug()<< "start video";
@@ -89,10 +89,12 @@ void myWidget:: start_video()   //定义一个在myWidget类下的函数方法
 
 }
 
-void myWidget::ctrl_G29()
+void myWidget::ctrl_G29_slot()
 {
-
+    thrd_data_send->start();
+    qDebug()<<"主线程"<<QThread::currentThreadId();
 }
+
 
 //我的窗口类的析构 创建出来的对象必须要释放
 myWidget::~myWidget()

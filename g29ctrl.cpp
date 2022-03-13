@@ -8,7 +8,7 @@
 #include "LogitechSteeringWheelLib.h"
 #include "g29ctrl.h"
 
-#pragma comment(lib, "Ws2_32.lib")      //必须要有这个库，winsock需要使用这个库。详见笔记，注意看编译器的的解释
+#pragma comment(lib, "Ws2_32.lib")      //必须要有这个库，winsock需要使用这个库。详见笔记，注意看编译器的报错显示，同时学会使用MSDN
 #pragma comment  (lib, "Advapi32.lib")
 #pragma comment(lib, "LogitechSteeringWheelLib.lib")
 #pragma comment( linker, "/subsystem:\"console\" /entry:\"WinMainCRTStartup\"")
@@ -27,10 +27,9 @@ int* WheelInit()
     {
         cout << "————————————————————————————————————————" << endl;
         printf("init secusssssss\n");
-        //printf("%d\n", hwnd);
         int gearShifter = 0;
         //sendthere(1);
-        //printf("aaaaaaaaaa\n");
+
         while (LogiUpdate() && LogiIsConnected(0))
         {
             printf("update seccessed\n");
