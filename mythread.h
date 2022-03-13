@@ -3,17 +3,24 @@
 
 #include <QThread>
 
-class MyThread:public QThread
+class MyThread : public QThread
 {
-
+    Q_OBJECT
 public:
     MyThread();
     void closeThread();
+
 protected:
-    virtual void run();
+    void run() Q_DECL_OVERRIDE;
 
 private:
     volatile bool isStop;
+
+signals:
+    void g29_init_error();  //g29初始化错误
+    void socket_init_error();
+    void inet_error();
+
 
 };
 

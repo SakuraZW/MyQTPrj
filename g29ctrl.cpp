@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <sys/timeb.h>
 #include <winsock.h>
-
+#include <QDebug>
 #include "LogitechSteeringWheelLib.h"
 #include "g29ctrl.h"
 
@@ -18,11 +18,11 @@ using namespace std;
 int driver[5];
 int driverdata = 0;
 int changeddata = 0;
+int symb = 0;
 
-
-int* WheelInit()
+int WheelInit()
 {
-
+/*
     if (LogiSteeringInitialize(true))
     {
         cout << "————————————————————————————————————————" << endl;
@@ -148,11 +148,16 @@ int* WheelInit()
         }
 
     }
-    else
-    {
-        printf("init faild");
-    }
-    return driver;
+*/
+
+//    else
+//    {
+
+            qDebug()<<"init faild";         //QT中尽量使用qdebug输出调试信息。如果使用功printf和cout在多线程情况下无法输出
+            symb = 1;
+
+//    }
+    return symb;
 }
 
 uint64_t TimeMilliSecond()
@@ -198,10 +203,12 @@ void SendMessage(int x, int y, int z, int bb)//创建并关闭套接字，接受
     SOCKET s_server;
     //服务端地址客户端地址
     SOCKADDR_IN server_addr;
-    initialization();
+
+    initialization();       //网络连接的初始化
+
     //填充服务端信息
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.S_un.S_addr = inet_addr("119.45.138.172");
+    server_addr.sin_addr.S_un.S_addr = inet_addr(INET_ADDR);
     server_addr.sin_port = htons(8888);
     //创建套接字
     s_server = socket(AF_INET, SOCK_STREAM, 0);
