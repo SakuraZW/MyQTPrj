@@ -1,5 +1,5 @@
 #include "mywidget.h"
-
+#include "mythread.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
